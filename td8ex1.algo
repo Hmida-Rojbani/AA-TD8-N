@@ -1,0 +1,32 @@
+// les deplacements possibles :
+// dx: |1| 1| 2| 2| -1| -1| -2| -2| 
+// dy: |2|-2| 1|-1| 2 | -2| 1 | -1
+
+// Solution : 
+// S[1..N,1..N]
+/*
+
+S[i,j] := 0 si S[i,j] n'a été visité
+S[i,j] := k si S[i,j]  été visité à kème iteration
+*/
+
+PROCEDURE BacktrackI(i, VAR q : BOOLEAN, x: INTEGER, y:INTEGER)
+VAR
+    intialiser la sélection
+    q:= FALSE
+BEGIN
+    REPEAT
+        choisir un déplacement
+        IF (acceptable) THEN
+            enregister le déplacement
+            IF (solution incompléte) THEN
+                BacktrackI(succ(i), q , u , v)
+                IF (q = FALSE) THEN
+                    effacer le déplacement
+                END_IF
+            ELSE
+                q := TRUE
+            END_IF
+        END_IF
+    UNTIL (q=TRUE OR plus de déplacement)
+END
