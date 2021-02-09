@@ -1,0 +1,40 @@
+// G[1..N,1..N]:Boolean matrice qui répresente le graphe
+// G[i,j] = true s'il existe une relation entre noeud i et noeud j
+// S[1..N] : Integer
+// S[i] 0 couleur de noeud i
+// M nombre de coueleurs max
+
+PROCEDURE coloriage(i: INTEGER, VAR q : BOOLEAN)
+VAR
+    c :INTEGER = 0
+    q := FALSE
+BEGIN
+    REPEAT
+        c := c+1
+        IF (acceptable_coleur(i, c)) THEN
+            S[i]:= c
+            IF (i < N) THEN
+                coloriage(i+1, q)
+                IF (q = FALSE) THEN
+                    S[i] := 0
+                END_IF
+            ELSE
+                q := TRUE
+            END_IF
+        END_IF
+    UNTIL (q = TRUE OR c = M)
+
+END
+
+FUNCTION acceptable_coleur(i : INTEGER, c: INTEGER) : BOOLEAN
+VAR
+    j : INTEGER = 0
+    accept : BOOLEAN = TRUE
+BEGIN
+    WHILE (j < i AND accept) DO
+        IF (G[i,j] = TRUE AND S[j] = c) THEN
+            accept := FALSE
+        END_IF
+    END_WHILE
+    RETURN accept
+END
