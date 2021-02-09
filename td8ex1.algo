@@ -1,6 +1,6 @@
 // les deplacements possibles :
 // dx: |1| 1| 2| 2| -1| -1| -2| -2| 
-// dy: |2|-2| 1|-1| 2 | -2| 1 | -1
+// dy: |2|-2| 1|-1| 2 | -2| 1 | -1|
 
 // Solution : 
 // S[1..N,1..N]
@@ -10,23 +10,29 @@ S[i,j] := 0 si S[i,j] n'a été visité
 S[i,j] := k si S[i,j]  été visité à kème iteration
 */
 
-PROCEDURE BacktrackI(i, VAR q : BOOLEAN, x: INTEGER, y:INTEGER)
+PROCEDURE cavalier(i : INTEGER, VAR q : BOOLEAN, x: INTEGER, y:INTEGER)
 VAR
-    intialiser la sélection
+    u, v:INTEGER
+    j :INTEGER = 0
     q:= FALSE
 BEGIN
     REPEAT
-        choisir un déplacement
-        IF (acceptable) THEN
-            enregister le déplacement
-            IF (solution incompléte) THEN
-                BacktrackI(succ(i), q , u , v)
+        //choisir un déplacement
+        j:= j+1
+        u:= x + dx[j]
+        v:= y + dy[j]
+        IF ( 1 <= u <= N AND 1 <= v <= N AND S[u,v] = 0) THEN
+            //enregister le déplacement
+            S[u,v] := i
+            IF (i < N*N-1) THEN
+                cavalier(i +1, q , u , v)
                 IF (q = FALSE) THEN
-                    effacer le déplacement
+                    //effacer le déplacement
+                    S[u,v] := 0
                 END_IF
             ELSE
                 q := TRUE
             END_IF
         END_IF
-    UNTIL (q=TRUE OR plus de déplacement)
+    UNTIL (q=TRUE OR j=8)
 END
