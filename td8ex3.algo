@@ -1,0 +1,41 @@
+/*
+Ghraphe sera représenté par une matrie G[1..N,1..N]
+tq G[i,j] = vrai si les sommets i et j sont adjecents
+
+N: nombre de noeuds 
+Résultat 
+S[1..N] d'entiers
+S[i] représente l'indice du iéme sommet du cycle
+
+structure Intermediare
+V[1..N] de booleen
+V[i] = vrai le sommet i n'a pas été visité
+
+*/
+
+PROCEDURE cycle_hamiltonien(i : INTEGER)
+VAR
+     j:INTEGER
+     V[1] := FALSE
+BEGIN
+    //pour tous les condidats
+    FOR j FROM 2 TO N  DO
+        //choisir le condidat 
+        IF (V[j] = TRUE AND G[S[i-1] , j] = TRUE AND (i<>N OR G[j,1] = TRUE)) THEN
+            // enregistrer le coup
+            S[i] := j
+            V[j] := FALSE
+            IF (i < N) THEN
+                cycle_hamiltonien(i+1)
+            ELSE
+                // Afficher la solution
+                FOR k FROM 1 TO N  DO
+                    ecrire(S[k])
+                END_FOR
+            END_IF
+            // effacer l'enregistrement
+            S[i] := 0
+            V[j] := TRUE
+        END_IF
+    END_FOR
+END
