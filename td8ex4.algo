@@ -1,0 +1,32 @@
+/*
+N : nombre d'entiers positifs
+W[1..N] => W[i] < W[i+1]
+M : valeur recherché
+Résultat 
+S[1..X] qui contient les élements sélectionés
+Structure intermidiére 
+Select[1..N] de booleen
+Select[i] = vrai si W[i] est dejà a été selectionné
+*/
+
+PROCEDURE Somme(i : INTEGER)
+VAR
+    sum : INTEGER := 0
+BEGIN
+    FOR j FROM 1 TO N   DO
+        IF (sum + W[j] <= M AND Select[j] = FALSE AND i <> N) THEN
+            S[i] := W[j]
+            Select[j] := TRUE
+            IF (sum < M) THEN
+                Somme(i+1)
+            ELSE
+                // Afficher la solution
+                FOR k FROM 1 TO N  DO
+                    ecrire(S[k])
+                END_FOR
+            END_IF
+            S[i] := 0
+            Select[j] := FALSE
+        END_IF
+    END_FOR
+END
